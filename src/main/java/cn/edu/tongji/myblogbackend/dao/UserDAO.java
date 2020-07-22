@@ -1,9 +1,9 @@
 package cn.edu.tongji.myblogbackend.dao;
 
-import cn.edu.tongji.myblogbackend.pojo.User;
+import cn.edu.tongji.myblogbackend.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserDAO extends JpaRepository<User, Integer> {
-    User findByUsername(String username);
-    User getByUsernameAndPassword(String username, String password);
+public interface UserDAO extends JpaRepository<UserEntity, Integer> {
+    UserEntity findByUsername(String username);
+    UserEntity getByUsernameAndPassword(String username, String password);
 }

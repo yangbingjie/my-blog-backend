@@ -1,5 +1,6 @@
-package cn.edu.tongji.myblogbackend.pojo;
+package cn.edu.tongji.myblogbackend.interceptor;
 
+import cn.edu.tongji.myblogbackend.entity.UserEntity;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -22,7 +23,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         String page = uri;
 
         if(begingWith(page, requireAuthPages)){
-            User user = (User) session.getAttribute("user");
+            UserEntity user = (UserEntity) session.getAttribute("user");
             if(user==null) {
                 httpServletResponse.sendRedirect("login");
                 return false;
