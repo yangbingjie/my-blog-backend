@@ -1,9 +1,12 @@
 package cn.edu.tongji.myblogbackend.controller;
 
+import cn.edu.tongji.myblogbackend.entity.UserEntity;
 import cn.edu.tongji.myblogbackend.utils.StringUtils;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,12 +16,12 @@ import java.io.IOException;
 import java.util.Date;
 
 @Controller
-public class ProfileController {
+public class FileController {
     @CrossOrigin
-    @PostMapping(value = "api/file/cover")
+    @PostMapping(value = "api/file/avatar")
     @ResponseBody
-    public String coverUpload(MultipartFile file) throws Exception {
-        String folder = "/Users/bella/Projects/my-blog-backend/src/main/resources/static/profile_photo";
+    public String avatarUpload(MultipartFile file) throws Exception {
+        String folder = "/Users/bella/Projects/my-blog-backend/src/main/resources/static/profile_avatar";
         File imageFolder = new File(folder);
         String time = String.valueOf(new Date());
         File f = new File(imageFolder, StringUtils.getRandomString(6) + time + file.getOriginalFilename()
@@ -28,6 +31,7 @@ public class ProfileController {
         try {
             file.transferTo(f);
             String imgURL = "http://localhost:8443/api/file/cover/" + f.getName();
+//            String userId = file.data;
             return imgURL;
         } catch (IOException e) {
             e.printStackTrace();

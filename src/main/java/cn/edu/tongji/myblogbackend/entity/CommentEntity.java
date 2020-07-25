@@ -1,43 +1,47 @@
 package cn.edu.tongji.myblogbackend.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "comment", schema = "my-blog", catalog = "")
+@Table(name = "comment", schema = "myblog", catalog = "")
 public class CommentEntity {
-    private int commentId;
-    private int articleId;
-    private Integer referenceCommentId;
+    private String commentId;
+    private String articleId;
+    private String referenceCommentId;
     private int replyCount;
     private String content;
 
     @Id
+    @GeneratedValue(generator = "system_uuid")
+    @GenericGenerator(name = "system_uuid", strategy = "uuid")
     @Column(name = "comment_id")
-    public int getCommentId() {
+    public String getCommentId() {
         return commentId;
     }
 
-    public void setCommentId(int commentId) {
+    public void setCommentId(String commentId) {
         this.commentId = commentId;
     }
 
     @Basic
     @Column(name = "article_id")
-    public int getArticleId() {
+    public String getArticleId() {
         return articleId;
     }
 
-    public void setArticleId(int articleId) {
+    public void setArticleId(String articleId) {
         this.articleId = articleId;
     }
 
     @Basic
     @Column(name = "reference_comment_id")
-    public Integer getReferenceCommentId() {
+    public String getReferenceCommentId() {
         return referenceCommentId;
     }
 
-    public void setReferenceCommentId(Integer referenceCommentId) {
+    public void setReferenceCommentId(String referenceCommentId) {
         this.referenceCommentId = referenceCommentId;
     }
 
@@ -68,9 +72,9 @@ public class CommentEntity {
 
         CommentEntity that = (CommentEntity) o;
 
-        if (commentId != that.commentId) return false;
-        if (articleId != that.articleId) return false;
         if (replyCount != that.replyCount) return false;
+        if (commentId != null ? !commentId.equals(that.commentId) : that.commentId != null) return false;
+        if (articleId != null ? !articleId.equals(that.articleId) : that.articleId != null) return false;
         if (referenceCommentId != null ? !referenceCommentId.equals(that.referenceCommentId) : that.referenceCommentId != null)
             return false;
         if (content != null ? !content.equals(that.content) : that.content != null) return false;
@@ -80,8 +84,8 @@ public class CommentEntity {
 
     @Override
     public int hashCode() {
-        int result = commentId;
-        result = 31 * result + articleId;
+        int result = commentId != null ? commentId.hashCode() : 0;
+        result = 31 * result + (articleId != null ? articleId.hashCode() : 0);
         result = 31 * result + (referenceCommentId != null ? referenceCommentId.hashCode() : 0);
         result = 31 * result + replyCount;
         result = 31 * result + (content != null ? content.hashCode() : 0);

@@ -1,21 +1,25 @@
 package cn.edu.tongji.myblogbackend.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "favorite", schema = "my-blog", catalog = "")
+@Table(name = "favorite", schema = "myblog", catalog = "")
 public class FavoriteEntity {
-    private int favoriteId;
+    private String favoriteId;
     private String userId;
     private String articleId;
 
     @Id
+    @GeneratedValue(generator = "system_uuid")
+    @GenericGenerator(name = "system_uuid", strategy = "uuid")
     @Column(name = "favorite_id")
-    public int getFavoriteId() {
+    public String getFavoriteId() {
         return favoriteId;
     }
 
-    public void setFavoriteId(int favoriteId) {
+    public void setFavoriteId(String favoriteId) {
         this.favoriteId = favoriteId;
     }
 
@@ -46,7 +50,7 @@ public class FavoriteEntity {
 
         FavoriteEntity that = (FavoriteEntity) o;
 
-        if (favoriteId != that.favoriteId) return false;
+        if (favoriteId != null ? !favoriteId.equals(that.favoriteId) : that.favoriteId != null) return false;
         if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
         if (articleId != null ? !articleId.equals(that.articleId) : that.articleId != null) return false;
 
@@ -55,7 +59,7 @@ public class FavoriteEntity {
 
     @Override
     public int hashCode() {
-        int result = favoriteId;
+        int result = favoriteId != null ? favoriteId.hashCode() : 0;
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + (articleId != null ? articleId.hashCode() : 0);
         return result;

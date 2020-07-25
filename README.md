@@ -12,19 +12,21 @@
 
 request body:
 
-- author_id: int
+- article_id: String
+- author_id: String
 - title: string
-- content: string
+- content_html: string
+- content_markdown: string
 - is_public: bool
 - preview: string
 
 response body:
 
-- errno: integer
+- code: integer
   - 0: success
   - 1: error
 - errmsg: string
-- article_id: int
+- article_id: String
 
 ### Remove article
 
@@ -32,12 +34,12 @@ response body:
 
 request body:
 
-- author_id: int
-- article_id: int
+- author_id: String
+- article_id: String
 
 response body:
 
-- errno: integer
+- code: integer
   - 0: success
   - 1: error
 - errmsg: string
@@ -48,23 +50,26 @@ response body:
 
 request body:
 
-- article_id: int
-- user_id: int
+- article_id: String
+- user_id: String
 
 response body:
 
-- errno: integer
+- code: integer
   - 0: success
   - 1: error
 - errmsg: string
-- author_id: int
-- title: string
-- content: string
-- is_public: bool
-- view_count: int
-- like_count: int
-- star_count: int
-- update_time: Date
+- article:
+  - author_name: String
+  - title: string
+  - content_html: string
+  - content_markdown: string
+  - is_public: bool
+  - view_count: int
+  - like_count: int
+  - star_count: int
+  - update_time: Date
+  - author_id：String
 
 ### Search article by title
 
@@ -76,13 +81,13 @@ request body:
 
 response body:
 
-- errno: integer
+- code: integer
   - 0: success
   - 1: error
 - errmsg: string
 - article_list: list
   - preview: string
-  - author_id: int
+  - author_id: String
   - title: string
   - is_public: bool
   - view_count: int
@@ -96,16 +101,16 @@ response body:
 
 request body:
 
-- author_id: int
+- author_id: String
 
 response body:
 
-- errno: integer
+- code: integer
   - 0: success
   - 1: error
 - errmsg: string
 - article_list: list
-  - author_id: int
+  - author_id: String
   - title: string
   - content: string
   - is_public: bool
@@ -125,12 +130,12 @@ request body:
 
 response body:
 
-- errno: integer
+- code: integer
   - 0: success
   - 1: error
 - errmsg: string
 - article_list: list
-  - author_id: int
+  - author_id: String
   - title: string
   - content: string
   - is_public: bool
@@ -139,6 +144,14 @@ response body:
   - star_count: int
   - update_time: Date
   - preview: string
+
+## File
+
+## Add avatar
+
+`post` api/file/avatar
+
+
 
 ## Tag
 
@@ -152,11 +165,11 @@ request body:
 
 response body:
 
-- errno: integer
+- code: integer
   - 0: success
   - 1: error
 - errmsg: string
-- tag_id: int
+- tag_id: String
 
 ### Remove tag
 
@@ -164,11 +177,11 @@ response body:
 
 request body:
 
-- tag_id: int
+- tag_id: String
 
 response body:
 
-- errno: integer
+- code: integer
   - 0: success
   - 1: error
 - errmsg: string
@@ -179,11 +192,11 @@ response body:
 
 request body:
 
-- tag_id: int
+- tag_id: String
 
 response body:
 
-- errno: integer
+- code: integer
   - 0: success
   - 1: error
 - errmsg: string
@@ -201,10 +214,14 @@ request body:
 
 response body:
 
-- errno: integer
+- code: integer
   - 0: success
   - 1: error
 - errmsg: string
+- user: 
+  - user_id: String
+  - role: int
+  - avatar: string
 
 ### Logout
 
@@ -219,7 +236,7 @@ request body:
 
 response body:
 
-- errno: integer
+- code: integer
   - 0: success
   - 1: error
 - errmsg: string
@@ -236,17 +253,17 @@ response body:
 
 request body:
 
-- article_id: int
-- reference_comment_id: int
+- article_id: String
+- reference_comment_id: String
 - content: string
 
 response body:
 
-- errno: integer
+- code: integer
   - 0: success
   - 1: error
 - errmsg: string
-- comment_id: int
+- comment_id: String
 
 ### Remove Comment
 
@@ -254,12 +271,12 @@ response body:
 
 request body:
 
-- comment_id: int
-- user_id: int
+- comment_id: String
+- user_id: String
 
 response body:
 
-- errno: integer
+- code: integer
   - 0: success
   - 1: error
 - errmsg: string

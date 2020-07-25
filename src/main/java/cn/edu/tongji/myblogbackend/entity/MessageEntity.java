@@ -1,23 +1,26 @@
 package cn.edu.tongji.myblogbackend.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
-import java.util.Arrays;
 
 @Entity
-@Table(name = "message", schema = "my-blog", catalog = "")
+@Table(name = "message", schema = "myblog", catalog = "")
 public class MessageEntity {
-    private int messageId;
+    private String messageId;
     private String userId;
     private String content;
-    private byte[] status;
+    private int status;
 
     @Id
+    @GeneratedValue(generator = "system_uuid")
+    @GenericGenerator(name = "system_uuid", strategy = "uuid")
     @Column(name = "message_id")
-    public int getMessageId() {
+    public String getMessageId() {
         return messageId;
     }
 
-    public void setMessageId(int messageId) {
+    public void setMessageId(String messageId) {
         this.messageId = messageId;
     }
 
@@ -43,11 +46,11 @@ public class MessageEntity {
 
     @Basic
     @Column(name = "status")
-    public byte[] getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(byte[] status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -58,20 +61,20 @@ public class MessageEntity {
 
         MessageEntity that = (MessageEntity) o;
 
-        if (messageId != that.messageId) return false;
+        if (status != that.status) return false;
+        if (messageId != null ? !messageId.equals(that.messageId) : that.messageId != null) return false;
         if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
         if (content != null ? !content.equals(that.content) : that.content != null) return false;
-        if (!Arrays.equals(status, that.status)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = messageId;
+        int result = messageId != null ? messageId.hashCode() : 0;
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + (content != null ? content.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(status);
+        result = 31 * result + status;
         return result;
     }
 }

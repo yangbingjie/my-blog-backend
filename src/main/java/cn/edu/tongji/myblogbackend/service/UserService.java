@@ -13,6 +13,9 @@ public class UserService {
         UserEntity user = getByName(username);
         return null != user;
     }
+    public UserEntity getByUserId(String user_id){
+        return userDAO.getByUserId(user_id);
+    }
     public UserEntity getByName(String username){
         return userDAO.findByUsername(username);
     }

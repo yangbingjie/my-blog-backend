@@ -3,35 +3,42 @@ package cn.edu.tongji.myblogbackend.controller;
 import cn.edu.tongji.myblogbackend.entity.UserEntity;
 import cn.edu.tongji.myblogbackend.result.Result;
 import cn.edu.tongji.myblogbackend.service.UserService;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpSession;
 
 @Controller
+@RequestMapping(value = "api/user")
 public class LoginController {
     @Autowired
     UserService userService;
 
     @CrossOrigin
-    @PostMapping(value = "api/login")
+    @PostMapping(value = "/login")
     @ResponseBody
-    public Result login(@RequestBody UserEntity requestUser, HttpSession session){
+    public Object login(@RequestBody UserEntity requestUser, HttpSession session){
+        JSONObject res = new JSONObject();
+
         String username = requestUser.getUsername();
         username = HtmlUtils.htmlEscape(username);
         UserEntity userEntity = userService.get(username, requestUser.getPassword());
         if (null == userEntity){
             String message = "账号密码错误";
-            System.out.println("username or password errow");
-            return new Result(400);
+            res.put("code", 400);
+            res.put("errmsg", "网络错误");
         }else {
+            JSONObject user = new JSONObject();
             session.setAttribute("user", userEntity);
-            return new Result(200);
+            res.put("code", 200);
+            user.put("user_id", userEntity.getUserId());
+            user.put("role", userEntity.getRole());
+            user.put("avatar", userEntity.getAvatar());
+            res.put("user", user);
         }
+        return res;
     }
 }
