@@ -21,8 +21,10 @@ public class MyWebConfigurer implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/api/file/cover/**")
-                .addResourceLocations("file:" + "/Users/bella/Projects/my-blog-backend/src/main/resources/static/profile_avatar/");
+        registry.addResourceHandler("/api/file/avatar/**")
+                .addResourceLocations("file:" + "/Users/bella/Projects/my-blog-backend/src/main/resources/static/avatar/");
+        registry.addResourceHandler("/api/file/article_img/**")
+                .addResourceLocations("file:" + "/Users/bella/Projects/my-blog-backend/src/main/resources/static/article_img/");
     }
 
 }

@@ -19,6 +19,7 @@ request body:
 - content_markdown: string
 - is_public: bool
 - preview: string
+- img_list: []
 
 response body:
 
@@ -149,9 +150,44 @@ response body:
 
 ## Add avatar
 
-`post` api/file/avatar
+`post` api/file/uploadAvatar
 
+response body:
 
+- url: string
+
+## Upload article img
+
+`post` api/file/uploadArticleImg
+
+param:
+
+- folder: string
+
+response body:
+
+- code: integer
+  - 0: success
+  - 1: error
+- errmsg: string
+- url: string
+- folder: string
+
+## Remove Article Img
+
+`post` api/file/removeArticleImg
+
+param:
+
+- folder: string
+- file_url: string
+
+response body:
+
+- code: integer
+  - 0: success
+  - 1: error
+- errmsg: string
 
 ## Tag
 
@@ -243,7 +279,7 @@ response body:
 
 ## File
 
-`post`   api/file/cover
+`post`   api/file/avatar
 
 ## Comment
 

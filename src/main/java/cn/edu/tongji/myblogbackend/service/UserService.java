@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 public class UserService {
     @Autowired
     UserDAO userDAO;
-    public boolean isExist(String username){
-        UserEntity user = getByName(username);
+    public boolean isExist(String userId){
+        UserEntity user = getByUserId(userId);
         return null != user;
     }
     public UserEntity getByUserId(String user_id){
@@ -22,7 +22,7 @@ public class UserService {
     public UserEntity get(String username, String password){
         return userDAO.getByUsernameAndPassword(username, password);
     }
-    public void add(UserEntity user){
+    public void save(UserEntity user){
         userDAO.save(user);
     }
 }

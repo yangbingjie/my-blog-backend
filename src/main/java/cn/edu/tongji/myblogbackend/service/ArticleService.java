@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.LinkedHashMap;
 import java.util.Optional;
 
 
@@ -14,6 +15,10 @@ import java.util.Optional;
 public class ArticleService {
     @Autowired
     ArticleDAO articleDAO;
+    public boolean isExist(String articleId){
+        Optional<ArticleEntity> articleEntity = articleDAO.findById(articleId);
+        return articleEntity.isPresent();
+    }
     public boolean isAuthor(String articleId, String userId){
         Optional<ArticleEntity> articleEntity = articleDAO.findById(articleId);
         if (articleEntity.isPresent()){
@@ -31,6 +36,7 @@ public class ArticleService {
         articleEntity.setContentMarkdown(jsonObject.getString("content_markdown"));
         articleEntity.setIsPublic(jsonObject.getInteger("is_public"));
         articleEntity.setPreview(jsonObject.getString("preview"));
+        articleEntity.setPreview(jsonObject.getString("img_folder"));
         if (jsonObject.getString("article_id") == null) {
             articleEntity.setCreateTime(time);
             articleEntity.setUpdateTime(time);

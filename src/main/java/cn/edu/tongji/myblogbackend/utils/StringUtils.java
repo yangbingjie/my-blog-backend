@@ -1,6 +1,9 @@
 package cn.edu.tongji.myblogbackend.utils;
 
+import java.net.URL;
 import java.util.Random;
+import java.net.MalformedURLException;
+
 
 public class StringUtils {
     public static String getRandomString(int length) {
@@ -12,5 +15,19 @@ public class StringUtils {
             stringBuffer.append(base.charAt(number));
         }
         return stringBuffer.toString();
+    }
+    public static String getLastString(String str) {
+        URL url;
+        try {
+            url = new URL(str);
+        } catch (MalformedURLException e) {
+            return null;
+        }
+
+        String file = url.getFile();
+        String[] splitStr = file.split("/");
+        int len = splitStr.length;
+        String result = splitStr[len-1];
+        return result;
     }
 }

@@ -1,5 +1,7 @@
 package cn.edu.tongji.myblogbackend.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -18,8 +20,11 @@ public class ArticleEntity {
     private Integer starCount;
     private Timestamp createTime;
     private Timestamp updateTime;
+    private String imgFolder;
 
     @Id
+    @GeneratedValue(generator = "system_uuid")
+    @GenericGenerator(name = "system_uuid", strategy = "uuid")
     @Column(name = "article_id")
     public String getArticleId() {
         return articleId;
@@ -178,5 +183,15 @@ public class ArticleEntity {
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "img_folder")
+    public String getImgFolder() {
+        return imgFolder;
+    }
+
+    public void setImgFolder(String imgFolder) {
+        this.imgFolder = imgFolder;
     }
 }
