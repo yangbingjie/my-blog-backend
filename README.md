@@ -12,14 +12,14 @@
 
 request body:
 
-- article_id: String
-- author_id: String
+- article_id: string
+- author_id: string
 - title: string
 - content_html: string
 - content_markdown: string
 - is_public: bool
 - preview: string
-- img_list: []
+- img_folder: string
 
 response body:
 
@@ -27,7 +27,7 @@ response body:
   - 0: success
   - 1: error
 - errmsg: string
-- article_id: String
+- article_id: string
 
 ### Remove article
 
@@ -35,8 +35,8 @@ response body:
 
 request body:
 
-- author_id: String
-- article_id: String
+- author_id: string
+- article_id: string
 
 response body:
 
@@ -51,8 +51,8 @@ response body:
 
 request body:
 
-- article_id: String
-- user_id: String
+- article_id: string
+- user_id: string
 
 response body:
 
@@ -61,7 +61,7 @@ response body:
   - 1: error
 - errmsg: string
 - article:
-  - author_name: String
+  - author_name: string
   - title: string
   - content_html: string
   - content_markdown: string
@@ -70,7 +70,8 @@ response body:
   - like_count: int
   - star_count: int
   - update_time: Date
-  - author_id：String
+  - author_id：string
+  - img_folder: string
 
 ### Search article by title
 
@@ -88,7 +89,7 @@ response body:
 - errmsg: string
 - article_list: list
   - preview: string
-  - author_id: String
+  - author_id: string
   - title: string
   - is_public: bool
   - view_count: int
@@ -102,7 +103,7 @@ response body:
 
 request body:
 
-- author_id: String
+- author_id: string
 
 response body:
 
@@ -111,7 +112,7 @@ response body:
   - 1: error
 - errmsg: string
 - article_list: list
-  - author_id: String
+  - author_id: string
   - title: string
   - content: string
   - is_public: bool
@@ -136,7 +137,7 @@ response body:
   - 1: error
 - errmsg: string
 - article_list: list
-  - author_id: String
+  - author_id: string
   - title: string
   - content: string
   - is_public: bool
@@ -205,7 +206,7 @@ response body:
   - 0: success
   - 1: error
 - errmsg: string
-- tag_id: String
+- tag_id: string
 
 ### Remove tag
 
@@ -213,7 +214,7 @@ response body:
 
 request body:
 
-- tag_id: String
+- tag_id: string
 
 response body:
 
@@ -228,7 +229,7 @@ response body:
 
 request body:
 
-- tag_id: String
+- tag_id: string
 
 response body:
 
@@ -255,7 +256,7 @@ response body:
   - 1: error
 - errmsg: string
 - user: 
-  - user_id: String
+  - user_id: string
   - role: int
   - avatar: string
 
@@ -289,8 +290,8 @@ response body:
 
 request body:
 
-- article_id: String
-- reference_comment_id: String
+- article_id: string
+- reference_comment_id: string
 - content: string
 
 response body:
@@ -299,7 +300,7 @@ response body:
   - 0: success
   - 1: error
 - errmsg: string
-- comment_id: String
+- comment_id: string
 
 ### Remove Comment
 
@@ -307,8 +308,8 @@ response body:
 
 request body:
 
-- comment_id: String
-- user_id: String
+- comment_id: string
+- user_id: string
 
 response body:
 

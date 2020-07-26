@@ -36,7 +36,7 @@ public class ArticleService {
         articleEntity.setContentMarkdown(jsonObject.getString("content_markdown"));
         articleEntity.setIsPublic(jsonObject.getInteger("is_public"));
         articleEntity.setPreview(jsonObject.getString("preview"));
-        articleEntity.setPreview(jsonObject.getString("img_folder"));
+        articleEntity.setImgFolder(jsonObject.getString("img_folder"));
         if (jsonObject.getString("article_id") == null) {
             articleEntity.setCreateTime(time);
             articleEntity.setUpdateTime(time);

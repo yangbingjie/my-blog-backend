@@ -67,6 +67,7 @@ public class ArticleController {
             article.put("star_count", articleEntity.getStarCount());
             article.put("update_time", TimeUtils.format(articleEntity.getUpdateTime()));
             article.put("author_id", articleEntity.getAuthorId());
+            article.put("img_folder", articleEntity.getImgFolder());
             res.put("article", article);
         }else {
             res.put("code", 400);

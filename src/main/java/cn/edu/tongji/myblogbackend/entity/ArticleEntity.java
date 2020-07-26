@@ -23,9 +23,9 @@ public class ArticleEntity {
     private String imgFolder;
 
     @Id
+    @Column(name = "article_id")
     @GeneratedValue(generator = "system_uuid")
     @GenericGenerator(name = "system_uuid", strategy = "uuid")
-    @Column(name = "article_id")
     public String getArticleId() {
         return articleId;
     }
@@ -144,6 +144,16 @@ public class ArticleEntity {
         this.updateTime = updateTime;
     }
 
+    @Basic
+    @Column(name = "img_folder")
+    public String getImgFolder() {
+        return imgFolder;
+    }
+
+    public void setImgFolder(String imgFolder) {
+        this.imgFolder = imgFolder;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -164,6 +174,7 @@ public class ArticleEntity {
         if (starCount != null ? !starCount.equals(that.starCount) : that.starCount != null) return false;
         if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
         if (updateTime != null ? !updateTime.equals(that.updateTime) : that.updateTime != null) return false;
+        if (imgFolder != null ? !imgFolder.equals(that.imgFolder) : that.imgFolder != null) return false;
 
         return true;
     }
@@ -182,16 +193,7 @@ public class ArticleEntity {
         result = 31 * result + (starCount != null ? starCount.hashCode() : 0);
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
+        result = 31 * result + (imgFolder != null ? imgFolder.hashCode() : 0);
         return result;
-    }
-
-    @Basic
-    @Column(name = "img_folder")
-    public String getImgFolder() {
-        return imgFolder;
-    }
-
-    public void setImgFolder(String imgFolder) {
-        this.imgFolder = imgFolder;
     }
 }
