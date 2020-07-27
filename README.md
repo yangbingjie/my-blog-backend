@@ -20,6 +20,7 @@ request body:
 - is_public: bool
 - preview: string
 - img_folder: string
+- img_list:[]
 
 response body:
 
@@ -173,22 +174,6 @@ response body:
 - errmsg: string
 - url: string
 - folder: string
-
-## Remove Article Img
-
-`post` api/file/removeArticleImg
-
-param:
-
-- folder: string
-- file_url: string
-
-response body:
-
-- code: integer
-  - 0: success
-  - 1: error
-- errmsg: string
 
 ## Tag
 

@@ -44,24 +44,4 @@ public class FileController {
         }
         return res;
     }
-
-    @CrossOrigin
-    @PostMapping(value = "/removeArticleImg")
-    @ResponseBody
-    public JSONObject removeArticleImg(@RequestBody JSONObject requestBody) throws Exception {
-        // TODO add token
-        JSONObject res = new JSONObject();
-        try {
-            String folder = requestBody.getString("folder");
-            String fileUrl = requestBody.getString("file_url");
-            String filename = StringUtils.getLastString(fileUrl);
-            fileService.removeArticleImg(folder, filename);
-            res.put("code", 200);
-        }catch (Exception e) {
-            e.printStackTrace();
-            res.put("code", 400);
-            res.put("errmsg", "网络错误");
-        }
-        return res;
-    }
 }

@@ -2,6 +2,7 @@ package cn.edu.tongji.myblogbackend.service;
 
 import cn.edu.tongji.myblogbackend.dao.ArticleDAO;
 import cn.edu.tongji.myblogbackend.entity.ArticleEntity;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ import java.util.Optional;
 public class ArticleService {
     @Autowired
     ArticleDAO articleDAO;
+    @Autowired
+    FileService fileService;
     public boolean isExist(String articleId){
         Optional<ArticleEntity> articleEntity = articleDAO.findById(articleId);
         return articleEntity.isPresent();
@@ -36,7 +39,8 @@ public class ArticleService {
         articleEntity.setContentMarkdown(jsonObject.getString("content_markdown"));
         articleEntity.setIsPublic(jsonObject.getInteger("is_public"));
         articleEntity.setPreview(jsonObject.getString("preview"));
-        articleEntity.setImgFolder(jsonObject.getString("img_folder"));
+        String folder = jsonObject.getString("img_folder");
+        articleEntity.setImgFolder(folder);
         if (jsonObject.getString("article_id") == null) {
             articleEntity.setCreateTime(time);
             articleEntity.setUpdateTime(time);
@@ -53,6 +57,8 @@ public class ArticleService {
                     articleEntity.getIsPublic(), articleEntity.getCreateTime(),
                     articleEntity.getUpdateTime(), articleEntity.getArticleId());
         }
+        JSONArray array = jsonObject.getJSONArray("img_list");
+        fileService.removeUnusedArticleImg(array, folder);
         return articleEntity.getArticleId();
     }
 

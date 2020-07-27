@@ -5,6 +5,7 @@ import cn.edu.tongji.myblogbackend.entity.UserEntity;
 import cn.edu.tongji.myblogbackend.service.ArticleService;
 import cn.edu.tongji.myblogbackend.service.UserService;
 import cn.edu.tongji.myblogbackend.utils.TimeUtils;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,7 +40,6 @@ public class ArticleController {
                 res.put("code", 200);
                 res.put("article_id", articleId);
             }
-
         }
         return res;
     }
