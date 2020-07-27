@@ -53,8 +53,20 @@ public class FileService {
     private String addFile(String folder, MultipartFile file){
         File imageFolder = new File(folder);
         String time = String.valueOf(System.currentTimeMillis());
+        String suffix = file.getOriginalFilename();
+        if (suffix == null){
+            return "";
+        }
+        suffix = suffix.substring(suffix.length() - 4);
+        suffix = suffix.toLowerCase();
+        if (suffix.equals("jpeg")){
+            suffix = ".jpg";
+        }
+        if(!suffix.equals(".png") && !suffix.equals(".jpg")){
+            return "";
+        }
         String filename = time + StringUtils.getRandomString(6)
-                 + file.getOriginalFilename().substring(file.getOriginalFilename().length() - 4);
+                 + suffix;
 
         File f = new File(imageFolder, filename);
         if (!f.getParentFile().exists())

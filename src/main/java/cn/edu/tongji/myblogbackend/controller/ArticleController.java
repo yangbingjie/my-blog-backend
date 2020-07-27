@@ -27,7 +27,7 @@ public class ArticleController {
     public Object saveArticle(@RequestBody JSONObject requestBody) {
         JSONObject res = new JSONObject();
         String articleId = requestBody.getString("article_id");
-        String userId = requestBody.getString("user_id");
+        String userId = requestBody.getString("author_id");
         if (articleId != null && !articleService.isAuthor(articleId, userId)){
             res.put("code", 400);
             res.put("errmsg", "权限不足");
