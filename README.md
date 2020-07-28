@@ -21,7 +21,7 @@ request body:
 - preview: string
 - img_folder: string
 - img_list:[]
-- tag_list:[]
+- tag_list:[{tag_id, tag_name}]
 
 response body:
 
@@ -30,6 +30,25 @@ response body:
   - 1: error
 - errmsg: string
 - article_id: string
+
+### Edit auth
+
+修改文章权限，公开改为私有，私有改为公开
+
+`post` api/artilce/editAuth
+
+request body:
+
+- user_id: string
+- article_id: string
+
+response body:
+
+- code: integer
+  - 0: success
+  - 1: error
+- errmsg: string
+- is_public: int
 
 ### Remove article
 
@@ -76,7 +95,7 @@ response body:
   - update_time: Date
   - author_id：string
   - img_folder: string
-  - tag_list:[]
+  - tag_list:[{tag_id, tag_name}]
 
 ### Change like article state
 
@@ -214,54 +233,6 @@ response body:
 - errmsg: string
 - url: string
 - folder: string
-
-## Tag
-
-### Add tag
-
-`post`  api/tag/add
-
-request body:
-
-- tag_name: string
-
-response body:
-
-- code: integer
-  - 0: success
-  - 1: error
-- errmsg: string
-- tag_id: string
-
-### Remove tag
-
-`post`  api/tag/remove
-
-request body:
-
-- tag_id: string
-
-response body:
-
-- code: integer
-  - 0: success
-  - 1: error
-- errmsg: string
-
-### Add tag for article
-
-`post`  api/tag/addTagForArticle
-
-request body:
-
-- tag_id: string
-
-response body:
-
-- code: integer
-  - 0: success
-  - 1: error
-- errmsg: string
 
 ## User
 

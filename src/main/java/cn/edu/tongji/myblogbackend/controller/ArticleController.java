@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
 
 @Controller
 @RequestMapping(value = "api/article")
@@ -22,9 +21,32 @@ public class ArticleController {
     UserService userService;
 
     @CrossOrigin
+    @PostMapping(value = "/editAuth")
+    @ResponseBody
+    public JSONObject editAuth(@RequestBody JSONObject requestBody){
+        JSONObject res = new JSONObject();
+        String articleId = requestBody.getString("article_id");
+        String userId = requestBody.getString("user_id");
+        if (!articleService.isAuthor(articleId, userId)){
+            res.put("code", 400);
+            res.put("errmsg", "权限不足");
+        } else {
+            Integer isPublic = articleService.editAuth(articleId);
+            if (isPublic != -1){
+                res.put("is_public", isPublic);
+                res.put("code", 200);
+            }else{
+                res.put("code", 400);
+                res.put("errmsg", "网络错误");
+            }
+        }
+        return res;
+    }
+
+    @CrossOrigin
     @PostMapping(value = "/save")
     @ResponseBody
-    public Object saveArticle(@RequestBody JSONObject requestBody) {
+    public JSONObject saveArticle(@RequestBody JSONObject requestBody) {
         JSONObject res = new JSONObject();
         String articleId = requestBody.getString("article_id");
         String userId = requestBody.getString("author_id");
@@ -63,6 +85,8 @@ public class ArticleController {
             article.put("content_markdown", articleEntity.getContentMarkdown());
             article.put("is_public", articleEntity.getIsPublic());
             article.put("view_count", articleEntity.getViewCount());
+            // [{"tag_id":null, "tag_name":"C++"}, {"tag_id":"323dfs", "tag_name":"C--"}]
+            article.put("tag_list", articleService.getTagList(articleId));
             article.put("like_count", articleService.getLikeCount(articleId));
             article.put("is_like", articleService.isLike(articleId, userId) != null);
             article.put("star_count", articleService.getStarCount(articleId));

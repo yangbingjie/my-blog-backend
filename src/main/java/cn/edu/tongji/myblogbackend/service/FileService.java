@@ -78,17 +78,17 @@ public class FileService {
         }
     }
     public void removeUnusedArticleImg(JSONArray array, String folder){
-        Set<String> new_files = new HashSet<String>();
+        Set<String> newFiles = new HashSet<String>();
         for(int i = 0; i < array.size(); i++){
-            new_files.add(array.getString(i));
+            newFiles.add(array.getString(i));
         }
         String path = article_img_folder + folder + '/';
         File file = new File(path);
-        File[] old_files = file.listFiles();
-
-        for (int i = 0; (old_files != null) && i < old_files.length; ++i){
-            if (new_files.isEmpty() || !new_files.contains(old_files[i].getName())){
-                removeArticleImg(folder, old_files[i].getName());
+        File[] oldFiles = file.listFiles();
+        // 遍历oldFiles，如果在newFiles里找不到则删除该图片
+        for (int i = 0; (oldFiles != null) && i < oldFiles.length; ++i){
+            if (newFiles.isEmpty() || !newFiles.contains(oldFiles[i].getName())){
+                removeArticleImg(folder, oldFiles[i].getName());
             }
         }
     }
