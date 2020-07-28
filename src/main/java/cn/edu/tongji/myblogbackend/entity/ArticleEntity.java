@@ -16,16 +16,14 @@ public class ArticleEntity {
     private String preview;
     private Integer isPublic;
     private Integer viewCount;
-    private Integer likeCount;
-    private Integer starCount;
     private Timestamp createTime;
     private Timestamp updateTime;
     private String imgFolder;
 
     @Id
-    @Column(name = "article_id")
     @GeneratedValue(generator = "system_uuid")
     @GenericGenerator(name = "system_uuid", strategy = "uuid")
+    @Column(name = "article_id")
     public String getArticleId() {
         return articleId;
     }
@@ -105,26 +103,6 @@ public class ArticleEntity {
     }
 
     @Basic
-    @Column(name = "like_count")
-    public Integer getLikeCount() {
-        return likeCount;
-    }
-
-    public void setLikeCount(Integer likeCount) {
-        this.likeCount = likeCount;
-    }
-
-    @Basic
-    @Column(name = "star_count")
-    public Integer getStarCount() {
-        return starCount;
-    }
-
-    public void setStarCount(Integer starCount) {
-        this.starCount = starCount;
-    }
-
-    @Basic
     @Column(name = "create_time")
     public Timestamp getCreateTime() {
         return createTime;
@@ -170,8 +148,6 @@ public class ArticleEntity {
         if (preview != null ? !preview.equals(that.preview) : that.preview != null) return false;
         if (isPublic != null ? !isPublic.equals(that.isPublic) : that.isPublic != null) return false;
         if (viewCount != null ? !viewCount.equals(that.viewCount) : that.viewCount != null) return false;
-        if (likeCount != null ? !likeCount.equals(that.likeCount) : that.likeCount != null) return false;
-        if (starCount != null ? !starCount.equals(that.starCount) : that.starCount != null) return false;
         if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
         if (updateTime != null ? !updateTime.equals(that.updateTime) : that.updateTime != null) return false;
         if (imgFolder != null ? !imgFolder.equals(that.imgFolder) : that.imgFolder != null) return false;
@@ -189,8 +165,6 @@ public class ArticleEntity {
         result = 31 * result + (preview != null ? preview.hashCode() : 0);
         result = 31 * result + (isPublic != null ? isPublic.hashCode() : 0);
         result = 31 * result + (viewCount != null ? viewCount.hashCode() : 0);
-        result = 31 * result + (likeCount != null ? likeCount.hashCode() : 0);
-        result = 31 * result + (starCount != null ? starCount.hashCode() : 0);
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
         result = 31 * result + (imgFolder != null ? imgFolder.hashCode() : 0);

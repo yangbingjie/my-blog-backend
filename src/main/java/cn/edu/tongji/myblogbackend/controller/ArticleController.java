@@ -5,13 +5,13 @@ import cn.edu.tongji.myblogbackend.entity.UserEntity;
 import cn.edu.tongji.myblogbackend.service.ArticleService;
 import cn.edu.tongji.myblogbackend.service.UserService;
 import cn.edu.tongji.myblogbackend.utils.TimeUtils;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.elasticsearch.common.collect.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "api/article")
@@ -63,8 +63,10 @@ public class ArticleController {
             article.put("content_markdown", articleEntity.getContentMarkdown());
             article.put("is_public", articleEntity.getIsPublic());
             article.put("view_count", articleEntity.getViewCount());
-            article.put("like_count", articleEntity.getLikeCount());
-            article.put("star_count", articleEntity.getStarCount());
+            article.put("like_count", articleService.getLikeCount(articleId));
+            article.put("is_like", articleService.isLike(articleId, userId) != null);
+            article.put("star_count", articleService.getStarCount(articleId));
+            article.put("is_star", articleService.isStar(articleId, userId) != null);
             article.put("update_time", TimeUtils.format(articleEntity.getUpdateTime()));
             article.put("author_id", articleEntity.getAuthorId());
             article.put("img_folder", articleEntity.getImgFolder());
@@ -75,4 +77,44 @@ public class ArticleController {
         }
         return res;
     }
+
+    @CrossOrigin
+    @PostMapping(value = "/like")
+    @ResponseBody
+    public JSONObject likeArticle(@RequestBody JSONObject requestBody){
+        String articleId = requestBody.getString("article_id");
+        String userId = requestBody.getString("user_id");
+        JSONObject res = new JSONObject();
+        Tuple<Long, Boolean> tuple = articleService.likeArticle(articleId, userId);
+        if (tuple.v1() == -1){
+            res.put("code", 400);
+            res.put("errmsg", "文章不存在或没有访问权限");
+
+        }else{
+            res.put("code", 200);
+            res.put("like_count", tuple.v1());
+            res.put("is_like", tuple.v2());
+        }
+        return res;
+    }
+
+    @CrossOrigin
+    @PostMapping(value = "/star")
+    @ResponseBody
+    public JSONObject starArticle(@RequestBody JSONObject requestBody){
+        String articleId = requestBody.getString("article_id");
+        String userId = requestBody.getString("user_id");
+        Tuple<Long, Boolean> tuple= articleService.starArticle(articleId, userId);
+        JSONObject res = new JSONObject();
+        if (tuple.v1() == -1){
+            res.put("code", 400);
+            res.put("errmsg", "文章不存在或没有访问权限");
+        }else{
+            res.put("code", 200);
+            res.put("star_count", tuple.v1());
+            res.put("is_star", tuple.v2());
+        }
+        return res;
+    }
+
 }

@@ -3,6 +3,7 @@ package cn.edu.tongji.myblogbackend.service;
 import cn.edu.tongji.myblogbackend.entity.UserEntity;
 import cn.edu.tongji.myblogbackend.utils.StringUtils;
 import com.alibaba.fastjson.JSONArray;
+import org.elasticsearch.common.collect.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,16 +24,13 @@ public class FileService {
     private final String article_img_url_prefix = "http://localhost:8443/api/file/article_img/";
 
 
-    public Map<String, String> saveArticleImg(MultipartFile file, String folder){
-        Map<String, String> map = new HashMap<String, String>();
+    public Tuple<String, String> saveArticleImg(MultipartFile file, String folder){
         if (folder.equals("") || folder.equals("null")){
             String time = String.valueOf(System.currentTimeMillis());
             folder = time + StringUtils.getRandomString(8);
         }
         String imgUrl = this.addFile(article_img_folder + folder, file);
-        map.put("url", article_img_url_prefix + folder + '/' + imgUrl);
-        map.put("folder", folder);
-        return map;
+        return new Tuple<String, String>(article_img_url_prefix + folder + '/' + imgUrl, folder);
     }
 
     public String setAvatar(MultipartFile file, String userId){

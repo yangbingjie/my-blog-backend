@@ -21,6 +21,7 @@ request body:
 - preview: string
 - img_folder: string
 - img_list:[]
+- tag_list:[]
 
 response body:
 
@@ -69,10 +70,49 @@ response body:
   - is_public: bool
   - view_count: int
   - like_count: int
+  - is_like: bool
   - star_count: int
+  - is_star: bool
   - update_time: Date
   - author_id：string
   - img_folder: string
+  - tag_list:[]
+
+### Change like article state
+
+`post` api/article/like
+
+request body:
+
+- article_id: string
+- user_id: string
+
+response body:
+
+- code: integer
+  - 0: success
+  - 1: error
+- errmsg: string
+- like_count: int
+- is_like: bool
+
+### Change star article state
+
+`post` api/article/star
+
+request body:
+
+- article_id: string
+- user_id: string
+
+response body:
+
+- code: integer
+  - 0: success
+  - 1: error
+- errmsg: string
+- star_count: int
+- is_star: bool
 
 ### Search article by title
 

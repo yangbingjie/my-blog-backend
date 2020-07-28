@@ -5,6 +5,7 @@ import cn.edu.tongji.myblogbackend.service.FileService;
 import cn.edu.tongji.myblogbackend.service.UserService;
 import cn.edu.tongji.myblogbackend.utils.StringUtils;
 import com.alibaba.fastjson.JSONObject;
+import org.elasticsearch.common.collect.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -33,10 +34,10 @@ public class FileController {
         // TODO add token
         JSONObject res = new JSONObject();
         try {
-            Map<String, String> m = fileService.saveArticleImg(file, folder);
+            Tuple<String, String> tuple = fileService.saveArticleImg(file, folder);
             res.put("code", 200);
-            res.put("url", m.get("url"));
-            res.put("folder", m.get("folder"));
+            res.put("url", tuple.v1());
+            res.put("folder", tuple.v2());
         } catch (Exception e) {
             e.printStackTrace();
             res.put("code", 400);
