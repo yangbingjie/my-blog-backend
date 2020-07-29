@@ -12,9 +12,10 @@ public interface ArticleDAO extends JpaRepository<ArticleEntity, String> {
     @Modifying
     @Transactional
     @Query(value= "update ArticleEntity set title=?1, contentHtml=?2," +
-            " contentMarkdown=?3, preview=?4, isPublic=?5, updateTime=?6 where articleId=?7")
+            " contentMarkdown=?3, preview=?4, isPublic=?5, updateTime=?6, cover=?7 where articleId=?8")
     void updateArticle(String title, String contentHtml, String contentMarkdown,
-                       String preview, Integer isPublic, Timestamp updateTime, String articleId);
+                       String preview, Integer isPublic, Timestamp updateTime,
+                       String cover, String articleId);
 
     ArticleEntity save(ArticleEntity articleEntity);
 }

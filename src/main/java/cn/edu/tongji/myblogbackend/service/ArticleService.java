@@ -153,6 +153,7 @@ public class ArticleService {
         articleEntity.setContentMarkdown(jsonObject.getString("content_markdown"));
         articleEntity.setIsPublic(jsonObject.getInteger("is_public"));
         articleEntity.setPreview(jsonObject.getString("preview"));
+        articleEntity.setCover(jsonObject.getString("cover"));
         String folder = jsonObject.getString("img_folder");
         articleEntity.setImgFolder(folder);
         if (jsonObject.getString("article_id") == null) {
@@ -166,7 +167,8 @@ public class ArticleService {
             articleDAO.updateArticle(articleEntity.getTitle(),
                     articleEntity.getContentHtml(), articleEntity.getContentMarkdown(),
                     articleEntity.getPreview(), articleEntity.getIsPublic(),
-                    articleEntity.getUpdateTime(), articleEntity.getArticleId());
+                    articleEntity.getUpdateTime(),
+                    articleEntity.getCover(),articleEntity.getArticleId());
         }
         JSONArray tag_array = jsonObject.getJSONArray("tag_list");
         updateTagList(tag_array, articleEntity.getArticleId());

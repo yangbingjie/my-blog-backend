@@ -19,6 +19,7 @@ public class ArticleEntity {
     private Timestamp createTime;
     private Timestamp updateTime;
     private String imgFolder;
+    private String cover;
 
     @Id
     @GeneratedValue(generator = "system_uuid")
@@ -169,5 +170,15 @@ public class ArticleEntity {
         result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
         result = 31 * result + (imgFolder != null ? imgFolder.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "cover")
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 }

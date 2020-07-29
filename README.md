@@ -21,6 +21,7 @@ request body:
 - preview: string
 - img_folder: string
 - img_list:[]
+- cover: string 存储第一张图像的URL
 - tag_list:[{tag_id, tag_name}]
 
 response body:
@@ -257,6 +258,8 @@ response body:
   - avatar: string
 
 ### Logout
+
+### Sign up
 
 ### Edit Profile
 
