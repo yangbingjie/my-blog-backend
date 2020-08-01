@@ -67,6 +67,26 @@ public class ArticleController {
     }
 
     @CrossOrigin
+    @PostMapping(value = "/search")
+    @ResponseBody
+    public Object searchArticle(@RequestBody JSONObject requestBody){
+        String searchType = requestBody.getString("search_type");
+        String query = requestBody.getString("query");
+        String userId = requestBody.getString("user_id");
+        JSONObject res = new JSONObject();
+        JSONObject articles= articleService.searchArticle(searchType, query, userId);
+        if (articles != null){
+            res.put("code", 200);
+            res.put("all_tag_list", articles.getJSONArray("all_tag_list"));
+            res.put("article_list", articles.getJSONArray("article_list"));
+        }else{
+            res.put("code", 400);
+            res.put("errmsg", "网络错误");
+        }
+        return res;
+    }
+
+    @CrossOrigin
     @PostMapping(value = "/getArticleById")
     @ResponseBody
     public Object getArticleDetails(@RequestBody JSONObject requestBody){

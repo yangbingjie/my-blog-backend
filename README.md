@@ -95,7 +95,6 @@ response body:
   - is_star: bool
   - update_time: Date
   - author_id：string
-  - img_folder: string
   - tag_list:[{tag_id, tag_name}]
 
 ### Change like article state
@@ -134,37 +133,15 @@ response body:
 - star_count: int
 - is_star: bool
 
-### Search article by title
+### Search article
 
-`post` api/article/searchArticleByTitle
+`get` api/article/search
 
-request body:
+request param:
 
-- title: string
-
-response body:
-
-- code: integer
-  - 0: success
-  - 1: error
-- errmsg: string
-- article_list: list
-  - preview: string
-  - author_id: string
-  - title: string
-  - is_public: bool
-  - view_count: int
-  - like_count: int
-  - star_count: int
-  - update_time: Date
-
-### Search article by author
-
-`post` api/article/searchArticleByAuthor
-
-request body:
-
-- author_id: string
+- search_type: string   / all /title / author_name / author_id/
+- query: string
+- user_id, string
 
 response body:
 
@@ -172,41 +149,21 @@ response body:
   - 0: success
   - 1: error
 - errmsg: string
+- all_tag_list: [{tag_id, tag_name}] 按照数量从多到少
 - article_list: list
-  - author_id: string
+  - article_id: string
+  - tag_list:[{tag_id, tag_name}]
+  - author_name: string
+  - author_avatar: string
   - title: string
-  - content: string
-  - is_public: bool
   - view_count: int
   - like_count: int
+  - is_like: bool
   - star_count: int
+  - is_star: bool
   - update_time: Date
   - preview: string
-
-### Search article by tag
-
-`post`
-
-request body:
-
-- tag_id
-
-response body:
-
-- code: integer
-  - 0: success
-  - 1: error
-- errmsg: string
-- article_list: list
-  - author_id: string
-  - title: string
-  - content: string
-  - is_public: bool
-  - view_count: int
-  - like_count: int
-  - star_count: int
-  - update_time: Date
-  - preview: string
+  - cover: string
 
 ## File
 

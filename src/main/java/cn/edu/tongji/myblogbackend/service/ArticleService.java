@@ -2,6 +2,7 @@ package cn.edu.tongji.myblogbackend.service;
 
 import cn.edu.tongji.myblogbackend.dao.*;
 import cn.edu.tongji.myblogbackend.entity.*;
+import cn.edu.tongji.myblogbackend.utils.TimeUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.elasticsearch.common.collect.Tuple;
@@ -26,6 +27,84 @@ public class ArticleService {
     ChooseTagDAO chooseTagDAO;
     @Autowired
     TagDao tagDao;
+    @Autowired
+    UserService userService;
+
+    public JSONObject searchArticle(String searchType, String query, String userId){
+        JSONObject result = new JSONObject();
+        JSONArray articleList = new JSONArray();
+        Map<String, JSONObject> allTagMap = new TreeMap<String, JSONObject>();
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        switch (searchType){
+            case "all":
+                list = articleDAO.searchByAll("%"+query+"%");
+                break;
+            case "title":
+                list = articleDAO.searchByTitle("%"+query+"%");
+                break;
+            case "author_name":
+                list = articleDAO.searchByAuthorName("%"+query+"%");
+                break;
+            case "arthor_id":
+                list = articleDAO.searchByAuthorId(query);
+                break;
+        }
+        for (int i = 0; i < list.size(); ++i){
+            JSONObject article = new JSONObject();
+            String articleId = (String)list.get(i).get("article_id");
+            article.put("article_id", articleId);
+            JSONArray tagList = getTagList(articleId);
+            JSONObject jo;
+            String tagName;
+            for (int j = 0; j < tagList.size(); j++) {
+                jo = (JSONObject) tagList.get(j);
+                tagName = jo.getString("tag_name");
+                if (allTagMap.containsKey(tagName)){
+                    jo = allTagMap.get(tagName);
+                    jo.put("count", 1 + (int)jo.get("count"));
+                    allTagMap.put(tagName, jo);
+                }else{
+                    jo.put("count", 1);
+                    allTagMap.put(tagName, jo);
+                }
+            }
+            article.put("tag_list", tagList);
+            String authorId = (String) list.get(i).get("author_id");
+            UserEntity user = userService.getByUserId(authorId);
+            article.put("author_name", user.getUsername());
+            article.put("author_avatar", user.getAvatar());
+            article.put("title", list.get(i).get("title"));
+            article.put("view_count", list.get(i).get("view_count"));
+            article.put("like_count", getLikeCount(articleId));
+            article.put("star_count", getStarCount(articleId));
+            article.put("is_like", isLike(articleId, userId));
+            article.put("is_star", isStar(articleId, userId));
+            article.put("update_time", TimeUtils.format((Timestamp)list.get(i).get("update_time")));
+            article.put("cover", list.get(i).get("cover"));
+            article.put("preview", list.get(i).get("preview"));
+            articleList.add(article);
+        }
+
+        List<Map.Entry<String,JSONObject>> li = new ArrayList<Map.Entry<String,JSONObject>>(allTagMap.entrySet());
+
+        Collections.sort(li,new Comparator<Map.Entry<String,JSONObject>>() {
+            @Override
+            public int compare(Map.Entry<String, JSONObject> o1, Map.Entry<String, JSONObject> o2) {
+                Integer n1 = (int) o1.getValue().get("count");
+                Integer n2 = (int) o2.getValue().get("count");
+                return n2.compareTo(n1);
+            }
+
+        });
+
+        result.put("article_list", articleList);
+        JSONArray allTagList = new JSONArray();
+        for (int i = 0; i < li.size(); i++) {
+            allTagList.add(li.get(i).getValue());
+        }
+        result.put("all_tag_list", allTagList);
+        return result;
+    }
 
     public Long getLikeCount(String articleId){
         return likeArticleDAO.countByAndArticleId(articleId);
