@@ -2,6 +2,24 @@
 
 > Sprint boot & My SQL
 
+# TODO
+
+choose tag in home page
+
+profile
+
+delete article
+
+scheduler
+
+token & sign up & logout
+
+user auth
+
+comment
+
+message
+
 # API
 
 ## Article
