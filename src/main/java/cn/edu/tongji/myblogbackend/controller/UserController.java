@@ -13,9 +13,49 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "api/user")
-public class LoginController {
+public class UserController {
     @Autowired
     UserService userService;
+
+    @CrossOrigin
+    @PostMapping(value = "/getProfile")
+    @ResponseBody
+    public Object getProfile(@RequestBody JSONObject requestBody) {
+        JSONObject res = new JSONObject();
+        String userId = requestBody.getString("user_id");
+        UserEntity userEntity = userService.getByUserId(userId);
+        if (userEntity != null){
+            JSONObject object = new JSONObject();
+            object.put("username", userEntity.getUsername());
+            object.put("avatar", userEntity.getAvatar());
+            object.put("description", userEntity.getDescription());
+            res.put("code", 200);
+            res.put("user", object);
+        }else{
+            res.put("code", 400);
+            res.put("errmsg", "用户不存在");
+        }
+        return res;
+    }
+
+    @CrossOrigin
+    @PostMapping(value = "/editProfile")
+    @ResponseBody
+    public Object editProfile(@RequestBody JSONObject requestBody) {
+        JSONObject res = new JSONObject();
+        String userId = requestBody.getString("user_id");
+        UserEntity userEntity = userService.getByUserId(userId);
+        if (userEntity != null){
+            userEntity.setDescription(requestBody.getString("description"));
+            userEntity.setUsername(requestBody.getString("username"));
+            userService.save(userEntity);
+            res.put("code", 200);
+        }else{
+            res.put("code", 400);
+            res.put("errmsg", "用户不存在");
+        }
+        return res;
+    }
 
     @CrossOrigin
     @PostMapping(value = "/login")

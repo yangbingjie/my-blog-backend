@@ -72,6 +72,7 @@ public class ArticleService {
             String authorId = (String) list.get(i).get("author_id");
             UserEntity user = userService.getByUserId(authorId);
             article.put("author_name", user.getUsername());
+            article.put("author_id", user.getUserId());
             article.put("author_avatar", user.getAvatar());
             article.put("title", list.get(i).get("title"));
             article.put("view_count", list.get(i).get("view_count"));

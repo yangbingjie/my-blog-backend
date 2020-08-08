@@ -4,9 +4,7 @@
 
 # TODO
 
-choose tag in home page
-
-profile
+profile timeline
 
 delete article
 
@@ -102,6 +100,8 @@ response body:
 - errmsg: string
 - article:
   - author_name: string
+  - author_id: string
+  - author_avatar: string
   - title: string
   - content_html: string
   - content_markdown: string
@@ -172,6 +172,7 @@ response body:
   - article_id: string
   - tag_list:[{tag_id, tag_name}]
   - author_name: string
+  - author_id: string
   - author_avatar: string
   - title: string
   - view_count: int
@@ -236,12 +237,32 @@ response body:
 
 ### Sign up
 
+### Get Profile
+
+`post` api/user/getProfile
+
+request body:
+
+- user_id: string
+
+response body:
+
+- code: integer
+  - 0: success
+  - 1: error
+- errmsg: string
+
+- user:
+  - username: string
+  - description: string
+
 ### Edit Profile
 
 `post`   api/user/editProfile
 
 request body:
 
+- user_id: string
 - description: string
 - username: string
 

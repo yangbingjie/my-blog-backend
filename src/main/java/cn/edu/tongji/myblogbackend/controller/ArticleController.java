@@ -99,6 +99,7 @@ public class ArticleController {
             JSONObject article = new JSONObject();
             UserEntity user = userService.getByUserId(articleEntity.getAuthorId());
             article.put("author_name", user.getUsername());
+            article.put("author_avatar", user.getAvatar());
             article.put("title", articleEntity.getTitle());
             article.put("content_html", articleEntity.getContentHtml());
             article.put("preview", articleEntity.getPreview());
